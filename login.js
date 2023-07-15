@@ -9,4 +9,4 @@ const dataschema=mongo.Schema({
 })
     
     
-module.exports=mongo.model("username&password",dataschema)
+module.exports=mongo.model("login",dataschema)
