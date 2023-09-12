@@ -1,0 +1,43 @@
+const express=require("express")
+
+const register=require('./register');
+const login=require('./login');
+const details=require("./custmerAddDetails")
+const getdetails=require("./getAllData")
+const getoneresult=require("./getOne")
+const otpVer=require("./otpVerification")
+const oneupdatepassword=require("./updatePassword")
+const block=require('./blockToUser')
+const unblocktouser=require("./unBlockUser")
+const creditedamount=require('./creditedAmount')
+const balanceCheck=require('./checkingBalance')
+const transactiondebutamount=require('./debutAmount')
+const setAtmPinNumber=require('./setAtmPinNumber')
+const atmDebutamount=require('./atmdebutAmount')
+const alldebutlist=require('./allDebutAmountList')
+const allcreditedlist=require("./allCreditedAmountList")
+const forgotatmPin=require("./forgotAtmPin")
+const allCreditedAmountdatwWise=require('./allCreditedAmountGettingDateWise')
+
+const rout=express.Router()
+
+rout.post("/register",register)
+rout.post("/login",login)
+rout.post("/addDetails",details)
+rout.post("/otp",otpVer)
+rout.get("/getbankdetails",getdetails)
+rout.get("/getone/:id",getoneresult)
+rout.post("/forgotpassword",oneupdatepassword)
+rout.post("/blocked",block)
+rout.post("/unblockuser",unblocktouser)
+rout.post("/creditedamount",creditedamount)
+rout.post("/checkbalance",balanceCheck)
+rout.post("/debutamount",transactiondebutamount)
+rout.post("/setAtmPin",setAtmPinNumber)
+rout.post("/atmviadebutamount",atmDebutamount)
+rout.get("/getallDebutAmountList",alldebutlist)
+rout.get("/getallcreditedAmountList",allcreditedlist)
+rout.put("/forgotatmpinNumber/:id",forgotatmPin)
+rout.get("/allcrediteAmountDateWise",allCreditedAmountdatwWise)
+
+module.exports=rout

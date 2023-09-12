@@ -1,0 +1,53 @@
+const mongo=require("mongoose")
+const transactionSchema=mongo.Schema({
+     name:{
+   type:String,
+   required:[true]
+     } ,
+    AccountNo:{
+        type:String, 
+        required:[true]  
+    },
+    Branch:{
+        type:String,
+        required:[true]
+    },
+    accounttype:{
+        type:String,
+        required:[true]
+    },
+   creditedDate:{
+        type:String,
+        required:[true]
+    },
+    creditedamount:{
+        type:Number,
+        required:[true]
+    }, 
+    cash10s:{
+        type:String
+    },
+    cash20s:{
+        type:String
+    },
+    cash50s:{
+        type:String
+    },
+    cash100s:{
+        type:String
+    },
+    cash200s:{
+        type:String
+    },
+    cash500s:{
+        type:String
+    },
+    cash2000s:{
+        type:String
+    },
+    perDaycreditedamount:{
+        type:Number
+    }
+})
+module.exports=mongo.model("transactiondetails",transactionSchema)
+//transcationSchema=creditedAmountSchema
