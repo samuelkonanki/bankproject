@@ -4,10 +4,10 @@ const mongo=require("mongoose")
 const obj=mongo.Types.ObjectId
 const getoneresult=(req,res)=>{
 let id=req.params.id
-console.log(id)
+console.log(id,'lllllllllll')
 const oneresult=details.findOne({AccountNo:id})
 .then(response=>{
-    res.json([response])
+    res.send(response)
 })
 .catch(err=>{
     res.json({message:"error",err})

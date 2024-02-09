@@ -13,53 +13,53 @@ async function creditedamount(req, res) {
 
     const AcceptedtypeofRupees = ["10", "20", "50", "100", "200", "500"]
        const moment1 = moment().format('YYYY-MM-DD')
-    if (req.body.fullname == '' || req.body.AccountNo == '' || req.body.creditedamount == '' || req.body.accounttype == '' || req.body.Branch == '' || req.body.typeofcash == '') {
-      res.status(404).send(apiResponse.errorFormat(`All Fields Are Mandatory Please fill All Details certain Details`, [{
+    if (req.body.firstname == '' || req.body.AccountNo == '' || req.body.creditedamount == '' || req.body.accounttype == '' || req.body.Branch == '' || req.body.typeofcash == '') {
+      res.status(404).send(apiResponse.errorFormat(`All Fields Are Mandatory Please fill All Details certain Details`, {
         message: `enter valid details`,
         code: `023`,
         status: `Empty fields Not Accepeted`
-      }]))
+      }))
     }
     else {
 
-      if (!(req.body.name && /^[A-Za-z]+(?:\s[A-Za-z]+)*$/.test(req.body.name))) {
-        res.status(400).send(apiResponse.errorFormat(` Not valid Numbers and Special Characters && Only Enter Characters `, [{
+      if (!(req.body.firstname && /^[A-Za-z]+(?:\s[A-Za-z]+)*$/.test(req.body.firstname))) {
+        res.status(400).send(apiResponse.errorFormat(` Not valid Numbers and Special Characters && Only Enter Characters `, {
           message: `please Enter valid FirstName`,
           code: `012`
-        }]))
+        }))
       }
       else if (!(req.body.accounttype && /^[A-Za-z]+(?:\s[A-Za-z]+)*$/.test(req.body.accounttype))) {
-        res.status(400).send(apiResponse.errorFormat(` Not valid Numbers and Special Characters && Only Enter Characters`, [{
+        res.status(400).send(apiResponse.errorFormat(` Not valid Numbers and Special Characters && Only Enter Characters`, {
           message: `please Enter valid AccountType Name`,
           code: `020`
-        }]))
+        }))
       }
       else if (!(req.body.AccountNo && /^[3][0-9]{9}$/.test(req.body.AccountNo))) {
-        res.status(400).send(apiResponse.errorFormat(`Your Number Invalid Format Not Valid Characters `, [{
+        res.status(400).send(apiResponse.errorFormat(`Your Number Invalid Format Not Valid Characters `, {
           message: `Enter Validate AccountNumber`,
           code: `025`
-        }]))
+        }))
       }
       else if (!(req.body.creditedamount && /^\d+(\.\d{1,2})?$/.test(req.body.creditedamount))) {
-        res.status(400).send(apiResponse.errorFormat(`Your CreditedAmount Enter Number Format Not Valid Characters `, [{
+        res.status(400).send(apiResponse.errorFormat(`Your CreditedAmount Enter Number Format Not Valid Characters `, {
           message: `Enter Validate Amount`,
           code: `024`
-        }]))
+        }))
       }
       else if (!(req.body.Branch && /^[A-Za-z]+(?:\s[A-Za-z]+)*$/.test(req.body.Branch))) {
-        res.status(400).send(apiResponse.errorFormat(` Not valid Numbers and Special Characters && Only Enter Characters`, [{
+        res.status(400).send(apiResponse.errorFormat(` Not valid Numbers and Special Characters && Only Enter Characters`, {
           message: `please Enter valid BranchName`,
           code: `026`
-        }]))
+        }))
       }
     
       const findaccountnumber = await detailsModel.findOne({ AccountNo: req.body.AccountNo })
       console.log(findaccountnumber)
       if (!findaccountnumber) {
-        res.status(404).send(apiResponse.errorFormat(`if you doesnt have Account Number Approach your Branch Bank Officers`, [{
+        res.status(404).send(apiResponse.errorFormat(`if you doesnt have Account Number Approach your Branch Bank Officers`, {
           message: `do not have account Number plesae contact Branch manager`,
           code: `010`
-        }], 404))
+        }))
       }
 
        //  if (AcceptedtypeofRupees[0]!==req.body.cash10s ||AcceptedtypeofRupees[1]!==req.body.cash20s || AcceptedtypeofRupees[2]!==req.body.cash50s || AcceptedtypeofRupees[3]!==req.body.cash100s || AcceptedtypeofRupees[4]!==req.body.cash200s || AcceptedtypeofRupees[5]!==req.body.cash500s) {
@@ -71,21 +71,21 @@ async function creditedamount(req, res) {
         // }
       else if (findaccountnumber.AccountNo == req.body.AccountNo) {
         if (req.body.creditedamount == 0) {
-          res.status(400).send(apiResponse.errorFormat(`please Enter Amount 0000 values are not updated your Balance or doesn't effect any Transactions`, [{
+          res.status(400).send(apiResponse.errorFormat(`please Enter Amount 0000 values are not updated your Balance or doesn't effect any Transactions`, {
             message: `0 values are not Accepted`,
             code: `0001`,
             status: `failed to your Tranaction`
-          }]))
+          }))
           console.log(req.body.creditedamount, '&&&&&&&&&&&&&&&&&&&&&')
         }
        
         else if (50000 < req.body.creditedamount) {
-          res.status(400).send(apiResponse.errorFormat(`savings  Account above 50000 thousand Rupees in Current Day not Accepted to Credited`, [{
+          res.status(400).send(apiResponse.errorFormat(`savings  Account above 50000 thousand Rupees in Current Day not Accepted to Credited`, {
             message: ` Above 50000 thousand are not Accepted Because of Income Tax Rule :114B  `,
             code: `000`,
             status: `please contact Branch Manager if you required to change Account Type & SubMitted Pan Number `,
             data: `more than 3 times your credited amount add gst your 4th transaction`
-          }]))
+          }))
         }
         const creditLimit1 = await transactionmodel.find({ AccountNo: req.body.AccountNo })
         var creditLimit = creditLimit1[creditLimit1.length - 1];
@@ -93,7 +93,7 @@ async function creditedamount(req, res) {
         if (50000 > req.body.creditedamount) {
           if (creditLimit == undefined || creditLimit == "undefined") {
             const credited = new transactionmodel({
-              name: req.body.name,
+              firstname: req.body.firstname,
               AccountNo: req.body.AccountNo,
               Branch: req.body.Branch,
               creditedDate: moment1,
@@ -114,11 +114,11 @@ async function creditedamount(req, res) {
               amount: amount.creditedamount
             }
             console.log(amount1, '-----------------------')
-            res.status(200).send(apiResponse.successFormat(`successfully credited your Amount`, amount1, [{
+            res.status(200).send(apiResponse.successFormat(`successfully credited your Amount`, amount1, {
               message: `success`,
               code: `021`,
               status: ` Amount Credited in your Bank Account Successfully`
-            }]))
+            }))
             const data = await balance.findOne({ AccountNo: req.body.AccountNo })
             console.log(data, '======================')
             if (data == null) {
@@ -149,18 +149,18 @@ async function creditedamount(req, res) {
           }
           const save = Number(creditLimit.perDaycreditedamount) + Number(req.body.creditedamount)
           if (creditLimit.perDaycreditedamount >= 50000 && creditLimit.creditedDate == moment1 || save >= 50000 && creditLimit.creditedDate == moment1) {
-            res.send(apiResponse.errorFormat(`your Limt reached Or Only Day Limit Lessthan 50000 Only`, [{
+            res.send(apiResponse.errorFormat(`your Limt reached Or Only Day Limit Lessthan 50000 Only`, {
               message: `please contact Branch Manager`,
               status: `failed To creditedAmount And credited Sufficient Equal to 50000 Or Lessthan 50000 Thousand Rupess Only `,
               code: `116`
-            }]))
+            }))
           }
           else if (creditLimit.AccountNo == req.body.AccountNo) {
             if (creditLimit.creditedDate == moment1) {
               const perDaycredited = Number(req.body.creditedamount)
               const dbperdayamount = Number(creditLimit.perDaycreditedamount)
               const secondTimecredited = new transactionmodel({
-                name: req.body.name,
+                firstname: req.body.firstname,
                 AccountNo: req.body.AccountNo,
                 Branch: req.body.Branch,
                 creditedDate: moment1,
@@ -184,11 +184,11 @@ async function creditedamount(req, res) {
               }
               const updatecreditamountperday = await transactionmodel.updateOne({ AccountNo: req.body.AccountNo }, { $set: obj14 })
               console.log(secondTimecredited, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-              res.status(200).send(apiResponse.successFormat(`successfully credited your Amount`, obj12, [{
+              res.status(200).send(apiResponse.successFormat(`successfully credited your Amount`, obj12, {
                 message: `success`,
                 code: `021`,
                 status: ` Amount Credited in your Bank Account Successfully`
-              }]))
+              }))
               const data = await balance.findOne({ AccountNo: req.body.AccountNo })
               if (data.AccountNo == req.body.AccountNo) {
                 console.log(data.AccountNo)
@@ -220,7 +220,7 @@ async function creditedamount(req, res) {
             else if (creditLimit.creditedDate != moment1) {
               const perDaycredited = Number(req.body.creditedamount)
               const secondTimecredited = new transactionmodel({
-                name: req.body.name,
+                firstname: req.body.firstname,
                 AccountNo: req.body.AccountNo,
                 Branch: req.body.Branch,
                 creditedDate: moment1,
@@ -244,11 +244,11 @@ async function creditedamount(req, res) {
               }
               const updatecreditamountperday = await transactionmodel.updateOne({ AccountNo: req.body.AccountNo }, { $set: obj14 })
               console.log(secondTimecredited, 'aaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-              res.status(200).send(apiResponse.successFormat(`successfully credited your Amount`, obj12, [{
+              res.status(200).send(apiResponse.successFormat(`successfully credited your Amount`, obj12, {
                 message: `success`,
                 code: `021`,
                 status: ` Amount Credited in your Bank Account Successfully`
-              }]))
+              }))
               const data = await balance.findOne({ AccountNo: req.body.AccountNo })
               if (data.AccountNo == req.body.AccountNo) {
                 console.log(data.AccountNo)
@@ -281,20 +281,20 @@ async function creditedamount(req, res) {
         }
       }
       else {
-        res.status(504).send(apiResponse.errorFormat(`failed to credited your Amount`, [{
+        res.status(504).send(apiResponse.errorFormat(`failed to credited your Amount`, {
           message: `your amount Not Credited`,
           code: `012`,
           status: `failed`
-        }]))
+        }))
       }
     }
   }
   catch (err) {
-    apiResponse.errorFormat(`something went wrong`, [{
+    apiResponse.errorFormat(`something went wrong`, {
       message: `please contact Branch Manager`,
       status: `failed To try Block`,
       code: `111`
-    }])
+    })
   }
 }
 module.exports = creditedamount

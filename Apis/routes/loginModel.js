@@ -22,6 +22,9 @@ const dataschema=mongo.Schema({
     },
     unblockstatusDate:{
         type:Date
+    },
+    role:{
+  type:String
     }
 }
 )

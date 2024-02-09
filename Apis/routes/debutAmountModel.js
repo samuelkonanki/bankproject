@@ -1,6 +1,6 @@
 const mongo=require('mongoose')
 const debutSchema=mongo.Schema({
-    name:{
+    firstname:{
         type:String
     },
     AccountNo:{

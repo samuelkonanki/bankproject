@@ -18,6 +18,8 @@ const alldebutlist=require('./allDebutAmountList')
 const allcreditedlist=require("./allCreditedAmountList")
 const forgotatmPin=require("./forgotAtmPin")
 const allCreditedAmountdatwWise=require('./allCreditedAmountGettingDateWise')
+const editdetail =require('./editDetails')
+const checkAccountNo =require('./checkAccountNumber')
 
 const rout=express.Router()
 
@@ -39,5 +41,7 @@ rout.get("/getallDebutAmountList",alldebutlist)
 rout.get("/getallcreditedAmountList",allcreditedlist)
 rout.put("/forgotatmpinNumber/:id",forgotatmPin)
 rout.get("/allcrediteAmountDateWise",allCreditedAmountdatwWise)
+rout.post("/editdetails/:id",editdetail)
+rout.post("/checkAccountNumber",checkAccountNo)
 
 module.exports=rout

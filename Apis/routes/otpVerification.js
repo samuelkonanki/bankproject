@@ -5,7 +5,8 @@ const moment = require('moment')
 const secretkey="secretkey"
 const now = new Date();
 const otpVer=async (req,res)=>{
-    const otpverified=await ref.findOne({otp:req.body.otp})
+  const role='admin@gmail.com'
+      const otpverified=await ref.findOne({otp:req.body.otp})
         if(req.body.otp==""){
             res.json({message:"doNot Enter otp",
           Status_code:404})
@@ -19,7 +20,7 @@ const otpVer=async (req,res)=>{
             if(otpverified){
               const dele=await ref.deleteOne({otp:req.body.otp})
           .then(response=>{
-          const tokengenarate=ref.findOne({email:req.body.username,password:req.body.password})
+          const tokengenarate= ref.findOne({email:req.body.username,password:req.body.password})
           token = jwt.sign({ username:req.body.username, password: req.password }, "secretValue", {
               expiresIn: "5m",
              });
@@ -30,8 +31,8 @@ const otpVer=async (req,res)=>{
           })
           .catch(err=>{
           res.json({message:"error",err})
-          })     
-      }
+          }) 
+       }
           }
 
           else{

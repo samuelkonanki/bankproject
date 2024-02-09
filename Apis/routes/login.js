@@ -41,7 +41,6 @@ const login = async (req, res, next) => {
         if(bcrypt.compareSync(decryptedPassword,differenceError.password)){
          console.log(differenceError)
          console.log(password)
-            console.log(password)
             var transporter = nodeemailer.createTransport({
                 service: "gmail",
                 auth: {
@@ -76,7 +75,9 @@ const login = async (req, res, next) => {
         })
         value.save()
             .then(response => {
+                console.log(differenceError,'------------------------')
                 res.json({
+                    res:differenceError,
                     message: "otp Sent Sucessfully",
                     status: 'sucess',
                     Status_code: 200

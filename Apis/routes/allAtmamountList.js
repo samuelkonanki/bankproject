@@ -13,24 +13,24 @@ async function atmAmountlist(req,res){
         console.log(list,'####################')
         
         if(!list){
-            res.status(404).send(apiResponse.errorFormat(`invalid Accountnumber`,[{
+            res.status(404).send(apiResponse.errorFormat(`invalid Accountnumber`,{
                 message:`please approach admin Team`,
                 code:`015`
-            }]))
+            }))
         }
         else if(list.AtmPinNumber==req.body.AtmPinNumber){
             const find=atmModel.find()
         .then(response=>{
-            res.status(200).send(apiResponse.successFormat(`success`,response,[{
+            res.status(200).send(apiResponse.successFormat(`success`,response,{
                 message:`your All ATM Transactions  is `,
                 code:`020`
-              }]))
+              }))
         })
         .catch(err=>{
-            res.status(500).send (apiResponse.errorFormat(`fail`,[{
+            res.status(500).send (apiResponse.errorFormat(`fail`,{
                 message:`fail`,
            code:`015`
-            }]))
+            }))
         })
      }
      }

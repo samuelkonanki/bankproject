@@ -9,7 +9,7 @@ const transaction = async (req, res) => {
 
     try {
         const date = moment().format(`YYYY-MM-DD HH-mm-ss`)
-        if (req.body.AccountNo == '' || req.body.debutAmount == '' || req.body.name == '') {
+        if (req.body.AccountNo == '' || req.body.debutAmount == '' || req.body.firstname == '') {
             res.status(400).send(apiResponse.errorFormat(`null or empty fields Are not Accepted`, {
                 message: `enter valid Account Number And debutAmount`,
                 code: `020`
@@ -17,6 +17,13 @@ const transaction = async (req, res) => {
         }
 
         else {
+            const single =await balancesheet.findOne({AccountNo:req.body.AccountNo})
+            if(!single){
+                res.status(404).send(apiResponse.errorFormat(`Nill Balance`, {
+                    message: `please Credit Some Amount After proceed To debit Payment`,
+                    code: `010`
+                })) 
+            }
             const findaccountnumber = await detailsModel.findOne({ AccountNo: req.body.AccountNo })
             if (!findaccountnumber) {
                 res.status(404).send(apiResponse.errorFormat(`invalid Accountnumber`, {
@@ -26,7 +33,7 @@ const transaction = async (req, res) => {
             }
             else if (findaccountnumber) {
                 const savedebutdetails = new debut({
-                    name: req.body.name,
+                    firstname: req.body.firstname,
                     AccountNo: req.body.AccountNo,
                     debutAmount: req.body.debutAmount,
                     debetedDate: date,
@@ -109,7 +116,5 @@ const transaction = async (req, res) => {
             code: `030`
         }))
     }
-
 }
-
 module.exports = transaction

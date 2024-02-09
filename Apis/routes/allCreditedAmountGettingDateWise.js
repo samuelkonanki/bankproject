@@ -16,10 +16,10 @@ else{
     console.log(data,'55555555555555555')
 
     if(!data){
-        res.status(404).send(apiResponse.errorFormat(`invalid Accountnumber`,[{
+        res.status(404).send(apiResponse.errorFormat(`invalid Accountnumber`,{
             message:`please approach admin Team`,
             code:`015`
-        }])) 
+        })) 
     }
     //  if(data){
     //     storedData=[]
@@ -38,7 +38,7 @@ else{
         if(item.creditedDate>=startDate&&item.creditedDate<=EndDate){
             storedData.push(item)
         }
-       
+        
        }
         console.log(storedData,'iiiiiiiiiiiiiiiiiiiiiiiii')
 

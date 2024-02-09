@@ -1,6 +1,6 @@
 const mongo=require("mongoose")
 const transactionSchema=mongo.Schema({
-     name:{
+    firstname:{
    type:String,
    required:[true]
      } ,

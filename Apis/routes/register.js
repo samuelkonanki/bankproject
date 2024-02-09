@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const salt = 10;
 const moment=require('moment-timezone')
 const insert = async (req, res) => {
-    const data = await conn.findOne({ email: req.body.email },{password:req.body.password})
+    const data = await conn.findOne({ email: req.body.email })
     const createdAt= moment().format ('YYYY-MM-DD HH-mm-ss')
     if (req.body.email==""||req.body.password=="") {
         res.json({
@@ -26,7 +26,8 @@ const insert = async (req, res) => {
                 email: req.body.email,
                  password: hash,
                  status:'success',
-                createdAt
+                createdAt,
+                role:req.body.role
             })
             value.save()
                 .then(response => {
